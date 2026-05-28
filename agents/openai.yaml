@@ -1,6 +1,6 @@
-﻿interface:
-  display_name: "HR Stay Competitive"
-  short_description: "Daily AI commercialization review workflow for Stay competitive."
+interface:
+  display_name: "hr-Stay competitive"
+  short_description: "Daily AI commercialization review workflow for the Stay competitive folder."
   default_prompt: "Use $hr-stay-competitive to generate or maintain today's 技能升级 file in Stay competitive."
 
 policy:

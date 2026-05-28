@@ -1,4 +1,4 @@
-﻿# Daily File Layout
+# Daily File Layout
 
 Use this exact structure for the daily main file:
 

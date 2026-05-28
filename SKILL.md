@@ -1,9 +1,9 @@
-﻿---
+---
 name: hr-stay-competitive
 description: Generate, maintain, and audit the daily "技能升级" competitiveness review workflow for AI commercial applications. Use when Codex needs to create or update `技能升级-YYYY年MM月DD日.md` files inside `D:\BaiduSyncdisk\个人PPT\Stay competitive`, generate 6 daily judgment questions, collect user answers in `我的意见：`, evaluate those answers against current public information, or set up and repair the related 09:20/09:40/10:00/16:00 automations.
 ---
 
-# Hr Stay Competitive
+# hr-Stay competitive
 
 Use this skill for the single-file "技能升级" workflow.
 
