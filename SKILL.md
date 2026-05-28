@@ -1,11 +1,11 @@
 ---
 name: hr-stay-competitive
-description: Generate, maintain, and audit the daily "技能升级" competitiveness review workflow for AI commercial applications. Use when Codex needs to create or update `技能升级-YYYY年MM月DD日.md` files inside `D:\BaiduSyncdisk\个人PPT\Stay competitive`, generate 6 daily judgment questions, collect user answers in `我的意见：`, evaluate those answers against current public information, or set up and repair the related 09:20/09:40/10:00/16:00 automations.
+description: Use when Codex needs to create or update `技能升级-YYYY年MM月DD日.md` in `D:\BaiduSyncdisk\个人PPT\Stay competitive`, generate 6 daily judgment questions, collect answers from `我的意见：` or the current thread, evaluate those answers against current public information, or repair the related 09:20/09:40/10:00/16:00 automations.
 ---
 
 # hr-Stay competitive
 
-Use this skill for the single-file "技能升级" workflow.
+Use this skill for the single-file `技能升级` workflow.
 
 ## File Contract
 
@@ -21,9 +21,9 @@ Use this skill for the single-file "技能升级" workflow.
 
 1. Generate the daily file before 10:00 using current public information about AI commercial applications.
 2. Deduplicate against the previous 7 calendar days before asking the user anything.
-3. Ask the user the 6 questions at 10:00 in the current thread.
-4. At 16:00, collect answers from the main file first, then from the thread only if the main file has no answers at all.
-5. If any of Q1 through Q6 is missing or ambiguous, remind the user and stop instead of writing a partial analysis.
+3. Keep `09:20` generation and `09:40` deduplication silent. Do not proactively post reminders for those two nodes.
+4. Ask the user the 6 questions only around the 10:00 node.
+5. Follow up only around the 16:00 node. If answers are incomplete, remind once and stop instead of writing a partial analysis.
 6. If all answers are present, fill or refresh the `我的意见：` lines first, then update the analysis sections in place.
 
 ## Question Generation Rules
@@ -46,8 +46,10 @@ Use this skill for the single-file "技能升级" workflow.
   1. Non-empty user-written content already present on today's `我的意见：` lines.
   2. The current thread, from a user message that clearly answers Q1 through Q6. Accept `Q1` and `q1` style labels case-insensitively.
 - Ignore placeholder text, empty answer lines, and boilerplate filler.
-- If the main file contains some answers but not all 6, treat it as incomplete and remind the user. Do not silently merge partial main-file answers with thread answers.
-- If the main file contains no answers at all, thread answers may be used as fallback.
+- Use one chosen source for the 16:00 pass. Do not silently merge partial main-file answers with partial thread answers.
+- If the main file already contains all 6 answers, use it.
+- If the main file is incomplete, the thread may be used only when it clearly contains a complete set of Q1 through Q6 answers.
+- If the chosen source is missing any answer, empty, placeholder-only, or ambiguous, remind the user once and stop.
 
 ## Analysis Layout
 
@@ -88,9 +90,30 @@ Use these names and schedules when repairing or recreating the workflow:
 
 - `Stay competitive / 技能升级 / 09:20 生成`
 - `Stay competitive / 技能升级 / 09:40 去重`
-- `Stay competitive / 技能升级 / 10:00 16:00 跟进`
+- `Stay competitive / 技能升级 / 严格节点提醒`
 
 Keep the main file directory fixed as `D:\BaiduSyncdisk\个人PPT\Stay competitive`.
+
+For the strict reminder automation:
+
+- Use heartbeat mode attached to the current thread.
+- Allow proactive thread messages only for the exact retry timestamps below:
+  - `09:50`
+  - `09:55`
+  - `10:00`
+  - `10:05`
+  - `10:10`
+  - `15:50`
+  - `15:55`
+  - `16:00`
+  - `16:05`
+  - `16:10`
+- Treat these as retry points, not repeated reminder windows.
+- For the 10:00 node, post the 6 questions at most once per day.
+- For the 16:00 node, post the missing-answer reminder at most once per day.
+- If the 16:00 analysis has already been written into today's file, do not run it again later the same day.
+- Outside the exact timestamps above, do not proactively post anything.
+- Do not post anything for `09:20` or `09:40`.
 
 ## Reference
 
